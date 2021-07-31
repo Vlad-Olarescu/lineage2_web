@@ -1,9 +1,11 @@
 import React from "react";
+import { NCHeader, LoginForm } from "../components";
 
 export const LoginPage = () => {
   return (
     <div>
-      <h1>Login</h1>
+      <NCHeader />
+      <LoginForm />
     </div>
   );
 };

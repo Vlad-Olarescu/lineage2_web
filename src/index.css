@@ -8,6 +8,7 @@ a,
 a:hover,
 a:active {
   text-decoration: none;
+  color: inherit;
 }
 
 input,
@@ -39,4 +40,5 @@ ol {
 
 html {
   font-size: 10px;
+  font-family: sans-serif;
 }
