@@ -21,3 +21,4 @@ export const Title = styled.h1`
   line-height: 72px;
   text-align: center;
 `;
+export const Button = styled.div``;

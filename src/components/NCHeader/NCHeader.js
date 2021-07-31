@@ -23,22 +23,22 @@ export const NCHeader = () => {
         <Games>
           <Button>Games</Button>
           <Dropdown>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
-            <Link>
+            <Link to="#">
               <DropdownImg src="https://source.unsplash.com/random" />
             </Link>
           </Dropdown>
