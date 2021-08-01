@@ -1,2 +1,2 @@
 export { NCHeader } from "./NCHeader";
-export { LoginForm } from "./LoginForm";
+export { LoginForm, RegisterForm } from "./Form";

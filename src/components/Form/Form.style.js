@@ -20,5 +20,15 @@ export const Title = styled.h1`
   font-size: 48px;
   line-height: 72px;
   text-align: center;
+  margin-bottom: 20px;
 `;
-export const Button = styled.div``;
+export const Button = styled.div`
+  color: lightgray;
+  font-size: 24px;
+  line-height: 48px;
+  border: 2px solid lightgray;
+  border-radius: 26px;
+  background-color: coral;
+  text-align: center;
+  cursor: pointer;
+`;

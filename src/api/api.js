@@ -17,25 +17,33 @@ const ENDPOINTS = {
 
 export const api = {
   login: async (email, password) => {
+    let data, error;
     try {
-      const { data, status } = await instance.post(ENDPOINTS.LOGIN, {
+      const request = await instance.post(ENDPOINTS.LOGIN, {
         email,
         password,
       });
-      return { data, status };
+      const response = request;
+
+      if (response.message !== undefined) {
+        error = response.message;
+      } else {
+        data = response;
+      }
+      data = response;
     } catch (err) {
-      alert(err.message);
+      error = err.message;
     }
+
+    return { data, error };
   },
   register: async (first_name, last_name, email, password) => {
     try {
       const { data, status } = await instance.post(ENDPOINTS.REGISTER, {
-        data: {
-          first_name,
-          last_name,
-          email,
-          password,
-        },
+        first_name,
+        last_name,
+        email,
+        password,
       });
       return { data, status };
     } catch (err) {

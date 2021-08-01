@@ -49,16 +49,18 @@ export const LoginForm = () => {
       return;
     }
 
-    const { data, status } = await api.login(formData.email, formData.password);
+    const { data, error } = await api.login(formData.email, formData.password);
 
-    if (status === 201) {
+    if (error !== undefined) {
+      console.warn("ERROR: ", error);
+      return;
+    }
+    if (data !== undefined) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("account", JSON.stringify(data.user));
       setTimeout(() => {
         history.push("/");
       }, 100);
-    } else {
-      console.warn("ERROR: ", data);
     }
   };
   return (

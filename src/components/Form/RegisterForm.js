@@ -6,7 +6,7 @@ import { emailRegex } from "../consts/const";
 import { Container, Form, Title, Button } from "./Form.style";
 import { Input } from "../Input";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const { loading, loggedIn } = useSession();
   const history = useHistory();
 
@@ -15,10 +15,15 @@ export const LoginForm = () => {
   }, [loading, loggedIn, history]);
 
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
+
   const [errors, setErrors] = useState({
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
@@ -40,6 +45,17 @@ export const LoginForm = () => {
   const handleSubmit = async () => {
     console.log(formData);
 
+    if (formData.first_name.length < 3) {
+      handleFormError("first_name", "Username must be at least 3 characters.");
+      return;
+    }
+    if (formData.last_name.length < 3) {
+      handleFormError(
+        "last_name",
+        "Player name must be at least 3 characters."
+      );
+      return;
+    }
     if (!emailRegex.test(formData.email)) {
       handleFormError("email", "Invalid email address.");
       return;
@@ -49,22 +65,44 @@ export const LoginForm = () => {
       return;
     }
 
-    const { data, status } = await api.login(formData.email, formData.password);
+    const { data, status } = await api.register(
+      formData.first_name,
+      formData.last_name,
+      formData.email,
+      formData.password
+    );
 
-    if (status === 201) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("account", JSON.stringify(data.user));
+    if (status === 201 && data.id !== undefined) {
       setTimeout(() => {
-        history.push("/");
+        history.push("/login");
       }, 100);
     } else {
       console.warn("ERROR: ", data);
     }
   };
+
   return (
     <Container>
       <Form>
-        <Title>LOG IN</Title>
+        <Title>REGISTER</Title>
+        <Input
+          label="Username"
+          placeholder="Username"
+          type="text"
+          error={errors.first_name}
+          value={formData.first_name}
+          handleOnChange={handleInputValueChange}
+          name="first_name"
+        />
+        <Input
+          label="Player Name"
+          placeholder="Player Name"
+          type="text"
+          error={errors.last_name}
+          value={formData.last_name}
+          handleOnChange={handleInputValueChange}
+          name="last_name"
+        />
         <Input
           label="Email"
           placeholder="Email address"
@@ -83,7 +121,16 @@ export const LoginForm = () => {
           handleOnChange={handleInputValueChange}
           name="password"
         />
-        <Button onClick={handleSubmit}>LOG IN</Button>
+        <Input
+          label="Repeat password"
+          placeholder="Password"
+          type="password"
+          error={errors.password}
+          value={formData.password}
+          handleOnChange={handleInputValueChange}
+          name="password"
+        />
+        <Button onClick={handleSubmit}>REGISTER</Button>
       </Form>
     </Container>
   );
