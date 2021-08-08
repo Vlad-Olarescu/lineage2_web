@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin-bottom: 20px;
+  margin: 10px 0;
 `;
 export const Label = styled.label`
   font-size: 16px;
@@ -18,7 +18,6 @@ export const InputElement = styled.input`
   line-height: 24px;
   padding: 7px 24px;
   border-radius: 20px;
-  margin-bottom: 5px;
 `;
 export const Error = styled.span`
   display: block;

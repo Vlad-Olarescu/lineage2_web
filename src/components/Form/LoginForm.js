@@ -60,7 +60,7 @@ export const LoginForm = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("account", JSON.stringify(data.user));
       setTimeout(() => {
-        history.push("/");
+        history.push("/newsfeed");
       }, 100);
     } else {
       toast.error(data);
