@@ -21,6 +21,7 @@ export const RegisterForm = () => {
     last_name: "",
     email: "",
     password: "",
+    repeatPassword: "",
   });
 
   const [errors, setErrors] = useState({
@@ -28,6 +29,7 @@ export const RegisterForm = () => {
     last_name: "",
     email: "",
     password: "",
+    repeatPassword: "",
   });
 
   const handleInputValueChange = (key, value) => {
@@ -45,41 +47,70 @@ export const RegisterForm = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
+    setErrors({
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    });
 
-    if (formData.first_name.length < 3) {
-      handleFormError("first_name", "Username must be at least 3 characters.");
+    const { first_name, last_name, email, password, repeatPassword } = formData;
+
+    if (first_name.length < 3) {
+      handleFormError("first_name", "First name must be at least 3 charcaters");
       return;
     }
-    if (formData.last_name.length < 3) {
+
+    if (last_name.length < 3) {
+      handleFormError("last_name", "Last name must be at least 3 characters");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      handleFormError("email", "Please enter a vail email address");
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      handleFormError("repeatPassword", "Passwords do not match");
+      return;
+    }
+
+    if (password.length < 8) {
       handleFormError(
-        "last_name",
-        "Player name must be at least 3 characters."
+        "repeatPassword",
+        "Password must be at least 8 characters"
       );
       return;
     }
-    if (!emailRegex.test(formData.email)) {
-      handleFormError("email", "Invalid email address.");
-      return;
-    }
-    if (formData.password.length < 8) {
-      handleFormError("password", "Password must be at least 8 characters.");
-      return;
-    }
 
-    const { data, status } = await api.register(
-      formData.first_name,
-      formData.last_name,
-      formData.email,
-      formData.password
-    );
+    async function submitRegisterForm() {
+      const { data, status } = await api.register(
+        first_name,
+        last_name,
+        email,
+        password
+      );
 
-    if (status === 201) {
-      setTimeout(() => {
-        history.push("/login");
-      }, 100);
-    } else {
-      toast.error(data);
+      if (status === 201) {
+        toast.success("Account created successfully. You can now log in.");
+        setTimeout(() => {
+          history.push("/login");
+        }, 3000);
+      } else {
+        toast.error("Something went wrong. Try again later." + data);
+      }
+    }
+    try {
+      for (const key in errors) {
+        if (errors[key] !== "") {
+          throw new Error("Can not submit form");
+        }
+      }
+      submitRegisterForm();
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
@@ -128,10 +159,10 @@ export const RegisterForm = () => {
           label="Password"
           placeholder="Repeat password"
           type="password"
-          error={errors.password}
-          value={formData.password}
+          error={errors.repeatPassword}
+          value={formData.repeatPassword}
           handleOnChange={handleInputValueChange}
-          name="password"
+          name="repeatPassword"
         />
         <Button onClick={handleSubmit}>REGISTER</Button>
       </Form>
