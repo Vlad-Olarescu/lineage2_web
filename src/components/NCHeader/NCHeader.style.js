@@ -5,6 +5,7 @@ export const Container = styled.div`
   background-color: black;
   display: flex;
   position: relative;
+  z-index: 7;
 `;
 export const Left = styled.div`
   display: flex;

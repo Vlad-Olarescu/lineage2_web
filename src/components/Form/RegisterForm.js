@@ -5,6 +5,8 @@ import { api } from "../../api/api";
 import { emailRegex } from "../consts/const";
 import { Container, Form, Title, Button } from "./Form.style";
 import { Input } from "../Input";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const RegisterForm = () => {
   const { loading, loggedIn } = useSession();
@@ -72,18 +74,19 @@ export const RegisterForm = () => {
       formData.password
     );
 
-    if (status === 201 && data.id !== undefined) {
+    if (status === 201) {
       setTimeout(() => {
         history.push("/login");
       }, 100);
     } else {
-      console.warn("ERROR: ", data);
+      toast.error(data);
     }
   };
 
   return (
     <Container>
       <Form>
+        <ToastContainer />
         <Title>REGISTER</Title>
         <Input
           label="Username"
@@ -122,8 +125,8 @@ export const RegisterForm = () => {
           name="password"
         />
         <Input
-          label="Repeat password"
-          placeholder="Password"
+          label="Password"
+          placeholder="Repeat password"
           type="password"
           error={errors.password}
           value={formData.password}

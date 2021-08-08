@@ -18,7 +18,6 @@ export const InputElement = styled.input`
   line-height: 24px;
   padding: 7px 24px;
   border-radius: 20px;
-  color: lightgray;
   margin-bottom: 5px;
 `;
 export const Error = styled.span`

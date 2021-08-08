@@ -17,25 +17,15 @@ const ENDPOINTS = {
 
 export const api = {
   login: async (email, password) => {
-    let data, error;
     try {
-      const request = await instance.post(ENDPOINTS.LOGIN, {
+      const { data, status } = await instance.post(ENDPOINTS.LOGIN, {
         email,
         password,
       });
-      const response = request;
-
-      if (response.message !== undefined) {
-        error = response.message;
-      } else {
-        data = response;
-      }
-      data = response;
+      return { data, status };
     } catch (err) {
-      error = err.message;
+      return { data: err.message, status: 500 };
     }
-
-    return { data, error };
   },
   register: async (first_name, last_name, email, password) => {
     try {
@@ -47,7 +37,7 @@ export const api = {
       });
       return { data, status };
     } catch (err) {
-      alert(err.message);
+      return { data: err.message, status: 500 };
     }
   },
   createPost: async ({ author, content, likes, comments, shares }) => {
@@ -66,7 +56,7 @@ export const api = {
       });
       return { data, status };
     } catch (err) {
-      alert(err.message);
+      return { data: err.message, status: 500 };
     }
   },
   getPosts: async () => {
@@ -78,7 +68,7 @@ export const api = {
       });
       return { data, status };
     } catch (err) {
-      alert(err.message);
+      return { data: err.message, status: 500 };
     }
   },
   getUsers: async () => {
@@ -90,7 +80,7 @@ export const api = {
       });
       return { data, status };
     } catch (err) {
-      alert(err.message);
+      return { data: err.message, status: 500 };
     }
   },
 };

@@ -1,11 +1,11 @@
 import React from "react";
-import { NCHeader } from "../components";
+import { Header, Home1 } from "../components";
 
 export const HomePage = () => {
   return (
     <>
-      <NCHeader />
-      <h1>Homepage</h1>
+      <Header />
+      <Home1 />
     </>
   );
 };

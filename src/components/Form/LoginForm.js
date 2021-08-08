@@ -5,6 +5,8 @@ import { api } from "../../api/api";
 import { emailRegex } from "../consts/const";
 import { Container, Form, Title, Button } from "./Form.style";
 import { Input } from "../Input";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const LoginForm = () => {
   const { loading, loggedIn } = useSession();
@@ -38,7 +40,10 @@ export const LoginForm = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
+    setErrors({
+      email: "",
+      password: "",
+    });
 
     if (!emailRegex.test(formData.email)) {
       handleFormError("email", "Invalid email address.");
@@ -49,23 +54,22 @@ export const LoginForm = () => {
       return;
     }
 
-    const { data, error } = await api.login(formData.email, formData.password);
+    const { data, status } = await api.login(formData.email, formData.password);
 
-    if (error !== undefined) {
-      console.warn("ERROR: ", error);
-      return;
-    }
-    if (data !== undefined) {
+    if (status === 201) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("account", JSON.stringify(data.user));
       setTimeout(() => {
         history.push("/");
       }, 100);
+    } else {
+      toast.error(data);
     }
   };
   return (
     <Container>
       <Form>
+        <ToastContainer />
         <Title>LOG IN</Title>
         <Input
           label="Email"
